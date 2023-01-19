@@ -1,6 +1,10 @@
+import ThemeSwitch from "@/components/ThemeSwitch";
 
 export default function settings() {
   return (
-    <div>settings</div>
+    <div>
+    change theme
+      <ThemeSwitch />
+    </div>
   )
 }

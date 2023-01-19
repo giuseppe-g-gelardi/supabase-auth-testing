@@ -7,6 +7,7 @@ import { Quicksand } from '@next/font/google'
 import { Database } from '@/db_types'
 import Layout from '@/components/Layout'
 const quicksand = Quicksand({ subsets: ['latin'] })
+import { ThemeProvider } from 'next-themes'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient<Database>())
@@ -17,8 +18,10 @@ export default function App({ Component, pageProps }: AppProps) {
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
       >
-        <Layout />
-        <Component {...pageProps} />
+        <ThemeProvider attribute='class'>
+          <Layout />
+          <Component {...pageProps} />
+        </ThemeProvider>
       </SessionContextProvider>
     </main>
   )

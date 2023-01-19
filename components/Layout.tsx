@@ -15,7 +15,7 @@ export default function Layout() {
   }
 
   return (
-    <div className="flex w-screen h-20 bg-gradient-to-r from-cyan-500 to-blue-500">
+    <div className="flex sticky top-0 z-50 w-screen h-20 bg-gradient-to-r from-cyan-500 to-blue-500">
       <div className="flex items-center ml-16 mr-auto">
         <div className='flex gap-5'>
           <Link href='/' className='hover:text-cyan-600 hover:underline'>
