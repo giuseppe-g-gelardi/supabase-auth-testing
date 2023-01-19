@@ -1,12 +1,26 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { useState } from 'react'
+import { Quicksand } from '@next/font/google'
+import { Database } from '@/db_types'
+const quicksand = Quicksand({ subsets: ['latin'] })
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient<Database>())
+
+  return (
+    <main className={quicksand.className}>
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}
+      >
+        <Component {...pageProps} />
+      </SessionContextProvider>
+    </main>
+  )
 }
 
 
 
-
-// import { Inter } from '@next/font/google'
-// const inter = Inter({ subsets: ['latin'] })
