@@ -1,33 +1,17 @@
-
-
-
-
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
+import { useUser } from '@supabase/auth-helpers-react'
 import { Database } from '@/db_types'
 import { Session, createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next'
-import Link from 'next/link'
-
-
-
-
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext | { req: NextApiRequest; res: NextApiResponse }) => {
   const supabase = createServerSupabaseClient(ctx)
   const { data, error } = await supabase.from('test').select('*').single()
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const { data: { session } } = await supabase.auth.getSession()
 
   if (error) console.log(error.message)
 
   return { props: { data, session } }
 }
-
-
-
-
 
 type TestProps = {
   data: Database['public']['Tables']['test']['Row']
@@ -43,7 +27,7 @@ export default function Home({ data, session }: TestProps) {
       <div>{JSON.stringify(data.message)}</div>
       <div className='flex gap-4'>
         <div className='text-rose-400'>{!session?.user ? "No session Detected, please log in" : (JSON.stringify(session?.user?.aud))}</div>
-        <div>{JSON.stringify(user?.email)}</div>
+        <div className='text-purple-800 font-bold'>{JSON.stringify(user?.email)}</div>
       </div>
     </div>
   )

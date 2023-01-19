@@ -1,9 +1,18 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
 import Link from "next/link"
+import { useRouter } from "next/router"
+
 export default function Layout() {
   const user = useUser()
   const supabaseClient = useSupabaseClient()
+  const router = useRouter()
 
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut()
+    if (error) return error && console.error(error.message)
+
+    router.reload()
+  }
 
   return (
     <div className="flex w-screen bg-purple-300 h-20">
@@ -28,7 +37,8 @@ export default function Layout() {
           <div className="flex flex-row items-center gap-4">
             {JSON.stringify(user?.email)}
             <button className='bg-cyan-300 hover:bg-cyan-400 w-40 h-10 rounded-lg'
-              onClick={async () => await supabaseClient.auth.signOut()}
+              onClick={handleLogout}
+            // onClick={async () => await supabaseClient.auth.signOut()}
             >
               log out
             </button>
