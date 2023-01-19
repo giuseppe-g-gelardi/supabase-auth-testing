@@ -5,6 +5,7 @@ import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 import { Quicksand } from '@next/font/google'
 import { Database } from '@/db_types'
+import Layout from '@/components/Layout'
 const quicksand = Quicksand({ subsets: ['latin'] })
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
       >
+        <Layout />
         <Component {...pageProps} />
       </SessionContextProvider>
     </main>
