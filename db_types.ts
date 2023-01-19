@@ -111,6 +111,7 @@ export interface Database {
           isPrivate: boolean
           location: string | null
           name: string | null
+          prefersDark: boolean
         }
         Insert: {
           avatar?: string | null
@@ -121,6 +122,7 @@ export interface Database {
           isPrivate?: boolean
           location?: string | null
           name?: string | null
+          prefersDark?: boolean
         }
         Update: {
           avatar?: string | null
@@ -131,6 +133,7 @@ export interface Database {
           isPrivate?: boolean
           location?: string | null
           name?: string | null
+          prefersDark?: boolean
         }
       }
       replies: {

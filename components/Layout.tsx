@@ -15,7 +15,7 @@ export default function Layout() {
   }
 
   return (
-    <div className="flex w-screen bg-purple-300 h-20">
+    <div className="flex w-screen h-20 bg-gradient-to-r from-cyan-500 to-blue-500">
       <div className="flex items-center ml-16 mr-auto">
         <div className='flex gap-5'>
           <Link href='/' className='hover:text-cyan-600 hover:underline'>
@@ -28,7 +28,10 @@ export default function Layout() {
             protected
           </Link>
           <Link href='/auth/userinfo' className='hover:text-indigo-600 hover:underline'>
-            middleware protected
+            user info
+          </Link>
+          <Link href='/auth/settings' className='hover:text-indigo-600 hover:underline'>
+            settings
           </Link>
         </div>
       </div>
@@ -38,7 +41,6 @@ export default function Layout() {
             {JSON.stringify(user?.email)}
             <button className='bg-cyan-300 hover:bg-cyan-400 w-40 h-10 rounded-lg'
               onClick={handleLogout}
-            // onClick={async () => await supabaseClient.auth.signOut()}
             >
               log out
             </button>
