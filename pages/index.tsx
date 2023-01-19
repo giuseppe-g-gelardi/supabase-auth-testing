@@ -55,9 +55,14 @@ export default function Home({ data }: TestProps) {
       >
         log out
       </button>
-      <Link href='/protected'>
-        protected
-      </Link>
+      <div className='flex gap-5'>
+        <Link href='/protected' className='hover:text-rose-600 hover:underline'>
+          protected
+        </Link>
+        <Link href='/auth/userinfo' className='hover:text-indigo-600 hover:underline'>
+          middleware protected
+        </Link>
+      </div>
     </div>
   )
 }
