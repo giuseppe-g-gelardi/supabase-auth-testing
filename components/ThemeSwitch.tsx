@@ -1,10 +1,11 @@
+import { Fragment } from "react";
 import { useTheme } from "next-themes";
 import { Switch } from "@headlessui/react";
-import { Fragment } from "react";
 import { SunIcon, MoonIcon } from '@heroicons/react/20/solid'
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import type { Database } from "@/db_types";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { updateTheme } from "@/api/user";
+import { Profile } from "@/types/UserTypes";
+import type { Database } from "@/db_types";
 
 // * The useTheme hook is used to get the current theme and to set the theme.
 // * It also provides the systemTheme which is the theme that the user has
@@ -12,11 +13,14 @@ import { updateTheme } from "@/api/user";
 
 // * you can find more information here: https://github.com/pacocoursey/next-themes
 
-export default function ThemeSwitch() {
+type ThemeSwitchProps = {
+  profile: Profile;
+}
+
+export default function ThemeSwitch({ profile }: ThemeSwitchProps) {
   const { systemTheme, setTheme, theme } = useTheme()
   const currentTheme = theme === 'system' ? systemTheme : theme;
   const supabaseClient = useSupabaseClient<Database>()
-  const user = useUser()
 
   // update this to pull theme from profile.prefersDark setting
 
@@ -24,7 +28,7 @@ export default function ThemeSwitch() {
     <Switch
       checked={currentTheme === 'dark' ? true : false}
       onChange={() => `${setTheme(currentTheme === 'dark' ? 'light' : 'dark')
-        }${updateTheme(user?.id!, supabaseClient, theme!)}`}
+        }${updateTheme(profile?.id!, supabaseClient, theme!)}`}
       as={Fragment}>
       {({ checked }) => (
         <a
