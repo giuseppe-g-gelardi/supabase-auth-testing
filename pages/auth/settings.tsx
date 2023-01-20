@@ -9,11 +9,14 @@ import type { Profile } from '@/types/UserTypes';
 
 
 type ProtectedProps = {
-  user: User,
+  // user: User,
   profile: Profile
 }
 
-export default function SettingsPage({ user, profile }: ProtectedProps) {
+export default function SettingsPage({
+  // user, 
+  profile
+}: ProtectedProps) {
   return (
     <div className="flex flex-col ">
       <div className="flex gap-4">
@@ -21,7 +24,11 @@ export default function SettingsPage({ user, profile }: ProtectedProps) {
         <ThemeSwitch />
       </div>
       <div className="flex gap-4">
-        private profile
+        <p className="flex">
+          {profile.isPrivate ? (
+            <p className='text-rose-400'>You{"'"}r Profile is Private</p>
+          ) : (<p className='text-purple-500'>You{"'"}r Profile is Public</p>)}
+        </p>
         <PrivateSwitch profile={profile} />
       </div>
     </div>
@@ -47,7 +54,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       initialSession: session,
-      user: session.user,
+      // user: session.user,
       profile
     },
   }
