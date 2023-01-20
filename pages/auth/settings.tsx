@@ -24,11 +24,11 @@ export default function SettingsPage({
         <ThemeSwitch />
       </div>
       <div className="flex gap-4">
-        <p className="flex">
+        <div className="flex">
           {profile.isPrivate ? (
             <p className='text-rose-400'>You{"'"}r Profile is Private</p>
           ) : (<p className='text-purple-500'>You{"'"}r Profile is Public</p>)}
-        </p>
+        </div>
         <PrivateSwitch profile={profile} />
       </div>
     </div>
