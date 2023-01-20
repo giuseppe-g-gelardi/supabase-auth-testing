@@ -1,8 +1,5 @@
 import ThemeSwitch from "@/components/ThemeSwitch";
-import { User, createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { GetServerSidePropsContext } from 'next'
-import type { Database } from '@/db_types';
-import type { Profile } from '@/types/UserTypes';
+
 export default function settings() {
   return (
     <div>
@@ -12,6 +9,11 @@ export default function settings() {
   )
 }
 
+
+// import { User, createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
+// import { GetServerSidePropsContext } from 'next'
+// import type { Database } from '@/db_types';
+// import type { Profile } from '@/types/UserTypes';
 // export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 //   const supabase = createServerSupabaseClient<Database>(ctx)
 //   const { data: { session } } = await supabase.auth.getSession()
