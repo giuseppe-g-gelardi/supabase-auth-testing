@@ -3,7 +3,7 @@ import { Switch } from "@headlessui/react";
 import { Fragment } from "react";
 import { SunIcon, MoonIcon } from '@heroicons/react/20/solid'
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { Database } from "@/db_types";
+import type { Database } from "@/db_types";
 import { updateTheme } from "@/api/user";
 
 // * The useTheme hook is used to get the current theme and to set the theme.

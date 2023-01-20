@@ -6,15 +6,19 @@ import type { Profile } from '@/types/UserTypes';
 
 type ProtectedProps = {
   user: User,
-  data: unknown
+  // data: unknown
   profile: Profile
 }
 
-export default function ProtectedPage({ user, data, profile }: ProtectedProps) {
+export default function ProtectedPage({ 
+  user, 
+  // data, 
+  profile 
+}: ProtectedProps) {
   return (
     <>
       <div>Protected content for {user.email}</div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
       <pre>{JSON.stringify(user, null, 2)}</pre>
       <pre>{JSON.stringify(profile, null, 2)}</pre>
     </>
@@ -40,13 +44,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }
 
   // Run queries with RLS on the server
-  const { data } = await supabase.from('users').select('*') // this does nothing lol
+  // const { data } = await supabase.from('users').select('*') // this does nothing lol
 
   return {
     props: {
       initialSession: session,
       user: session.user,
-      data: data ?? [],
+      // data: data ?? [],
       profile
     },
   }

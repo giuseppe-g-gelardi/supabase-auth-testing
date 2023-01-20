@@ -1,12 +1,56 @@
+import PrivateSwitch from "@/components/PrivateSwitch";
 import ThemeSwitch from "@/components/ThemeSwitch";
 
-export default function settings() {
+
+import { User, createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { GetServerSidePropsContext } from 'next'
+import type { Database } from '@/db_types';
+import type { Profile } from '@/types/UserTypes';
+
+
+type ProtectedProps = {
+  user: User,
+  profile: Profile
+}
+
+export default function SettingsPage({ user, profile }: ProtectedProps) {
   return (
-    <div>
-      change theme
-      <ThemeSwitch />
+    <div className="flex flex-col ">
+      <div className="flex gap-4">
+        change theme
+        <ThemeSwitch />
+      </div>
+      <div className="flex gap-4">
+        private profile
+        <PrivateSwitch profile={profile} />
+      </div>
     </div>
   )
+}
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createServerSupabaseClient<Database>(ctx)
+  const { data: { session } } = await supabase.auth.getSession()
+
+  const {
+    data: profile
+  } = await supabase.from('profiles').select('*').eq('id', session?.user.id).single()
+
+  if (!session)
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+
+  return {
+    props: {
+      initialSession: session,
+      user: session.user,
+      profile
+    },
+  }
 }
 
 
