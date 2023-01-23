@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { links } from "./links"
 
+
 export default function Layout() {
   const user = useUser()
   const supabaseClient = useSupabaseClient()

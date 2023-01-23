@@ -1,11 +1,5 @@
 
 
-
-
-
-export type Pages = | 'Home' | 'Public' | 'Protected' | 'User Info' | 'Settings';
-export type Urls = | '/' | '/profile' | '/messages' | '/auth/userinfo' | '/auth/settings';
-
 export const links = [
   { page: 'Home', url: '/' },
   { page: 'Public', url: '/public' },
