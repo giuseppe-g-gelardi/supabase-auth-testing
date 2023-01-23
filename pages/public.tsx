@@ -1,10 +1,10 @@
 
+import Link from 'next/link'
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import Avatar from '@/components/Avatar'
-import type { Database } from '@/db_types'
-import { Profile } from '@/types/UserTypes'
-import { User, createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { GetServerSidePropsContext } from 'next'
 
+import type { GetServerSidePropsContext } from 'next'
+import type { Database, Profile } from '@/types'
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient<Database>(ctx)
@@ -29,7 +29,9 @@ export default function PublicPage({ profiles }: PublicProfilesProps) {
       <div className='flex flex-col'>
         {profiles.map(profile => (
           <div key={profile.id} className='flex'>
-            <pre>{JSON.stringify(profile, null, 2)}</pre>
+            <Link href={`/auth/user/${profile.id}`}>
+              <pre>{JSON.stringify(profile, null, 2)}</pre>
+            </Link>
             <div className='ml-auto'>
               <Avatar avatar={profile.avatar} />
             </div>

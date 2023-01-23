@@ -81,6 +81,7 @@ export interface Database {
           comments: string | null
           created_at: string
           id: number
+          isPrivate: boolean
           likes: string | null
           posted_by: string
         }
@@ -89,6 +90,7 @@ export interface Database {
           comments?: string | null
           created_at?: string
           id?: number
+          isPrivate?: boolean
           likes?: string | null
           posted_by?: string
         }
@@ -97,6 +99,7 @@ export interface Database {
           comments?: string | null
           created_at?: string
           id?: number
+          isPrivate?: boolean
           likes?: string | null
           posted_by?: string
         }
