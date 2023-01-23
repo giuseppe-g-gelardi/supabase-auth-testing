@@ -25,7 +25,7 @@ export default function Home({ test, session }: TestProps) {
   return (
     <div className='flex flex-col gap-5 items-center justify-center h-screen'>
       <h1 className="text-rose-400 text-3xl">hi</h1>
-      <div>{JSON.stringify(test.message)}</div>
+      <div className='text-green-500 font-bold text-2xl'>{JSON.stringify(test.message)}</div>
       <div className='flex gap-4'>
         <div className='text-rose-400'>{!session?.user ? "No session Detected, please log in" : (JSON.stringify(session?.user?.aud))}</div>
         <div className='text-purple-800 font-bold'>{JSON.stringify(user?.email)}</div>

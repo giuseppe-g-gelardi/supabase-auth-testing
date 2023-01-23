@@ -12,13 +12,16 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
+
   // Check auth condition
   if (
     // session?.user.email?.endsWith('@icloud.com')
     // || 
-    session?.user.email?.includes('@') && session.user.email.endsWith('.com')
+    session // checks is there is a valid session
+    // session?.user.email?.includes('@') && session.user.email.endsWith('.com')
   ) {
     // Authentication successful, forward request to protected route.
+
     return res
   }
 
