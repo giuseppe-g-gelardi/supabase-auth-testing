@@ -1,13 +1,15 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import { useState } from 'react'
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-import { useState } from 'react'
 import { Quicksand } from '@next/font/google'
-import { Database } from '@/db_types'
-import Layout from '@/components/Layout'
-const quicksand = Quicksand({ subsets: ['latin'] })
 import { ThemeProvider } from 'next-themes'
+import Layout from '@/components/Layout'
+
+import type { Database } from '@/db_types'
+import type { AppProps } from 'next/app'
+
+const quicksand = Quicksand({ subsets: ['latin'] })
+import '@/styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient<Database>())

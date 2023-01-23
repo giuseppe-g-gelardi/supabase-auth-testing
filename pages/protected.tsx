@@ -1,5 +1,7 @@
-import { User, createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { GetServerSidePropsContext } from 'next'
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
+
+import type { GetServerSidePropsContext } from 'next'
+import type { Database, User } from '@/types'
 
 export default function ProtectedPage({ user, allRepos }: { user: User; allRepos: any }) {
   return (
@@ -15,7 +17,7 @@ export default function ProtectedPage({ user, allRepos }: { user: User; allRepos
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   // Create authenticated Supabase Client
-  const supabase = createServerSupabaseClient(ctx)
+  const supabase = createServerSupabaseClient<Database>(ctx)
   // Check if we have a session
   const {
     data: { session },
