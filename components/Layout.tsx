@@ -1,6 +1,7 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { links } from "./links"
 
 export default function Layout() {
   const user = useUser()
@@ -18,21 +19,12 @@ export default function Layout() {
     <div className="flex sticky top-0 z-50 w-screen h-20 bg-gradient-to-r from-cyan-500 to-blue-500">
       <div className="flex items-center ml-16 mr-auto">
         <div className='flex gap-5'>
-          <Link href='/' className='hover:text-cyan-600 hover:underline'>
-            Home
-          </Link>
-          <Link href='/public' className='hover:text-green-600 hover:underline'>
-            Public
-          </Link>
-          <Link href='/protected' className='hover:text-rose-600 hover:underline'>
-            protected
-          </Link>
-          <Link href='/auth/userinfo' className='hover:text-indigo-600 hover:underline'>
-            user info
-          </Link>
-          <Link href='/auth/settings' className='hover:text-indigo-600 hover:underline'>
-            settings
-          </Link>
+          {links.map(({ page, url }) => (
+            <Link key={page} href={`${url}`} className="hover:text-cyan-600 hover:underline">
+              {page}
+            </Link>
+          ))}
+
         </div>
       </div>
       <div className="flex items-center justify-center ml-auto mr-16">
@@ -67,3 +59,21 @@ export default function Layout() {
 
 
 
+
+
+
+{/* <Link href='/' className='hover:text-cyan-600 hover:underline'>
+            Home
+          </Link>
+          <Link href='/public' className='hover:text-green-600 hover:underline'>
+            Public
+          </Link>
+          <Link href='/protected' className='hover:text-rose-600 hover:underline'>
+            protected
+          </Link>
+          <Link href='/auth/userinfo' className='hover:text-indigo-600 hover:underline'>
+            user info
+          </Link>
+          <Link href='/auth/settings' className='hover:text-indigo-600 hover:underline'>
+            settings
+          </Link> */}
