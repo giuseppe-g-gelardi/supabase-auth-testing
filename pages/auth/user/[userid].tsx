@@ -29,7 +29,6 @@ type UserPageProps = {
 
 export default function UserPage({ profile, posts }: UserPageProps) {
 
-
   return (
     <div className="flex flex-col gap-5 items-center justify-center bg-gradient-to-r from-indigo-500 h-screen">
       <div className="flex flex-col">

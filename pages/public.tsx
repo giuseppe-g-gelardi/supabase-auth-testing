@@ -37,7 +37,6 @@ export default function PublicPage({ profiles }: PublicProfilesProps) {
             </div>
           </div>
         ))}
-
       </div>
     </div>
   )
