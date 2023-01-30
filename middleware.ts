@@ -8,31 +8,23 @@ export async function middleware(req: NextRequest) {
   // Create authenticated Supabase Client.
   const supabase = createMiddlewareSupabaseClient({ req, res })
   // Check if we have a session
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
+  const { data: { session } } = await supabase.auth.getSession()
 
   // Check auth condition
-  if (
-    // session?.user.email?.endsWith('@icloud.com')
-    // || 
-    session // checks is there is a valid session
-    // session?.user.email?.includes('@') && session.user.email.endsWith('.com')
-  ) {
-    // Authentication successful, forward request to protected route.
-
-    return res
-  }
-
+  if (session) return res
+  // checks is there is a valid session
+  // Authentication successful, forward request to protected route.
 
   // Auth condition not met, redirect to home page.
   const redirectUrl = req.nextUrl.clone()
-  redirectUrl.pathname = '/'
+  redirectUrl.pathname = '/' // should change to login page?
   redirectUrl.searchParams.set(`redirectedFrom`, req.nextUrl.pathname)
   return NextResponse.redirect(redirectUrl)
 }
 
+// should do per route basis? or just one global middleware?
+// it might be better to just do auth directly in the route
+// well see...
 export const config = {
   matcher: '/auth/:path*',
 }
