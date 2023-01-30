@@ -12,12 +12,28 @@ import { getInfinitePosts, getInitialPosts } from "@/api/posts"
 import type { GetServerSideProps } from "next"
 import type { DehydratedState } from "@tanstack/react-query"
 import type { Database, Profile, Post } from '@/types'
+// import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient(
+  //   {
+  //   defaultOptions: {
+  //     queries: {
+  //       refetchOnMount: true,
+  //       keepPreviousData: false,
+  //       // refetchOnReconnect: true,
+  //       // retry: 1,
+  //       // retryDelay: 1000,
+  //       // retryOnMount: false,
+  //       // refetchInterval: false,
+  //     }
+  //   }
+  // }
+  )
   const supabase = createServerSupabaseClient<Database>(ctx)
+  const userid = ctx.query.userid as string
 
-  const userid = ctx.query.userid
+  // queryClient.invalidateQueries(['getPosts', 'getInfinitePosts'])
 
   const {
     data: profile, error: profileError
@@ -25,7 +41,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await queryClient.prefetchQuery({
     queryKey: ['getPosts'],
-    queryFn: async () => getInitialPosts(profile?.id!)
+    queryFn: async () => getInitialPosts(userid),
+
   })
 
 
@@ -35,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       profile,
+      userid,
       dehydratedState: dehydrate(queryClient)
       // posts
     }
@@ -42,24 +60,32 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 type UserPageProps = {
-  profile: Profile
-  dehydratedState: DehydratedState
+  profile: Profile;
+  dehydratedState: DehydratedState;
+  userid: string;
   // posts: Array<Post>
 }
 
-export default function UserPage({ profile }: UserPageProps) {
+export default function UserPage({ profile, userid }: UserPageProps) {
   const { ref, inView } = useInView()
+  // const queryClient = useQueryClient()
+  // const router = useRouter()
+
+  // queryClient.invalidateQueries(['getPosts', 'getInfinitePosts'])
+
+
 
   const {
     data, error, isFetching, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage,
   } = useInfiniteQuery({
     queryKey: ['getInfinitePosts'],
-    queryFn: async ({ pageParam = 0 }) => await getInfinitePosts(pageParam, profile.id),
+    queryFn: async ({ pageParam = 0 }) => await getInfinitePosts(pageParam, userid),
     getNextPageParam: (lastPage: any, allPages: any) => { // TODO: fix type // lastPage.count doesnt exist???
       const maxPages = lastPage.count / 10;
       const nextPage = allPages.length + 1;
       return nextPage <= maxPages ? nextPage : undefined;
     },
+    refetchOnMount: true
   })
 
   useEffect(() => {
@@ -74,8 +100,22 @@ export default function UserPage({ profile }: UserPageProps) {
   }, [data, fetchNextPage, hasNextPage, inView])
 
 
+  // useEffect(() => {
+  //   // console.log({ error, isFetching, isLoading, isFetchingNextPage, hasNextPage })
+  //   const exitingFunction = () => {
+  //     console.log('exiting...');
+  //   };
+  //   router.events.on('routeChangeStart', exitingFunction);
+  //   return () => {
+  //     console.log('unmounting component...');
+  //     router.events.off('routeChangeStart', exitingFunction);
+  //   };
+  // }, [error, hasNextPage, isFetching, isFetchingNextPage, isLoading, router.events]);
+
+
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Something went wrong...</div>
+  if (isFetching) return <div>Fetching...</div> // somehow this fixed all of my problems lmao
 
   return (
     <div className="flex flex-col gap-5 items-center justify-center bg-gradient-to-r from-indigo-500 h-full">
