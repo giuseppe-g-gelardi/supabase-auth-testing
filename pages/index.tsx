@@ -6,6 +6,7 @@ import type { GetServerSidePropsContext } from 'next'
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient<Database>(ctx)
+
   const { data: test, error } = await supabase.from('test').select('*').single()
   const { data: { session } } = await supabase.auth.getSession()
 

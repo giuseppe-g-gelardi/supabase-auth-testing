@@ -26,5 +26,6 @@ export async function middleware(req: NextRequest) {
 // it might be better to just do auth directly in the route
 // well see...
 export const config = {
-  matcher: '/auth/:path*',
+  matcher: '/settings',
+  // matcher: '/auth/:path*',
 }

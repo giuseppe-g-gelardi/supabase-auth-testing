@@ -2,8 +2,6 @@
 
 export const links = [
   { page: 'Home', url: '/' },
-  { page: 'Public', url: '/public' },
-  { page: 'Protected', url: '/protected' },
-  { page: 'User Info', url: '/auth/userinfo' },
-  { page: 'Settings', url: '/auth/settings' },
+  { page: 'Settings', url: '/settings' },
+  { page: "404 LOL", url: '/asdfasdf'} // 404 page
 ] as const

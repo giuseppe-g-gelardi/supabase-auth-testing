@@ -4,10 +4,9 @@ import type { NextApiRequest as Request, NextApiResponse as Response } from 'nex
 import type { Database } from '@/db_types'
 
 export default async function handler(req: Request, res: Response) {
-  const sb = serverClient<Database>({ req, res })
+  const supabaseServerClient = serverClient<Database>({ req, res })
+  const { data, error } = await supabaseServerClient.auth.getUser()
+  if (!data.user) res.status(500).json(error?.message)
 
-  const { data, error } = await sb.from('test').select('*').single()
-  if (error) res.status(500).json(error?.message)
-
-  res.status(200).json(data?.message)
+  res.status(200).json(data.user)
 }
