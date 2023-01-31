@@ -12,23 +12,24 @@ import { getInfinitePosts, getInitialPosts } from "@/api/posts"
 import type { GetServerSideProps } from "next"
 import type { DehydratedState } from "@tanstack/react-query"
 import type { Database, Profile, Post } from '@/types'
+import { useRouter } from "next/router";
 // import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const queryClient = new QueryClient(
-  //   {
-  //   defaultOptions: {
-  //     queries: {
-  //       refetchOnMount: true,
-  //       keepPreviousData: false,
-  //       // refetchOnReconnect: true,
-  //       // retry: 1,
-  //       // retryDelay: 1000,
-  //       // retryOnMount: false,
-  //       // refetchInterval: false,
-  //     }
-  //   }
-  // }
+    {
+      defaultOptions: {
+        queries: {
+          refetchOnMount: true,
+          keepPreviousData: false,
+          // refetchOnReconnect: true,
+          // retry: 1,
+          // retryDelay: 1000,
+          // retryOnMount: false,
+          // refetchInterval: false,
+        }
+      }
+    }
   )
   const supabase = createServerSupabaseClient<Database>(ctx)
   const userid = ctx.query.userid as string
@@ -69,9 +70,10 @@ type UserPageProps = {
 export default function UserPage({ profile, userid }: UserPageProps) {
   const { ref, inView } = useInView()
   // const queryClient = useQueryClient()
-  // const router = useRouter()
+  const router = useRouter()
 
   // queryClient.invalidateQueries(['getPosts', 'getInfinitePosts'])
+
 
 
 
@@ -88,34 +90,17 @@ export default function UserPage({ profile, userid }: UserPageProps) {
     refetchOnMount: true
   })
 
+
   useEffect(() => {
     let fetching = false;
-
-    if (inView) {
-      fetching = true;
-      fetchNextPage()
-    }
-
+    if (inView) { fetching = true; fetchNextPage() }
     return () => { fetching = false }
   }, [data, fetchNextPage, hasNextPage, inView])
 
 
-  // useEffect(() => {
-  //   // console.log({ error, isFetching, isLoading, isFetchingNextPage, hasNextPage })
-  //   const exitingFunction = () => {
-  //     console.log('exiting...');
-  //   };
-  //   router.events.on('routeChangeStart', exitingFunction);
-  //   return () => {
-  //     console.log('unmounting component...');
-  //     router.events.off('routeChangeStart', exitingFunction);
-  //   };
-  // }, [error, hasNextPage, isFetching, isFetchingNextPage, isLoading, router.events]);
-
-
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Something went wrong...</div>
-  if (isFetching) return <div>Fetching...</div> // somehow this fixed all of my problems lmao
+  // if (isFetching) return <div>Fetching...</div> // nm this broke all kinds of stuff
 
   return (
     <div className="flex flex-col gap-5 items-center justify-center bg-gradient-to-r from-indigo-500 h-full">
