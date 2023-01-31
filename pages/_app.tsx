@@ -12,7 +12,7 @@ import {
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-import type { Database } from '@/db_types'
+import type { Database } from '@/types'
 import type { AppProps } from 'next/app'
 
 const quicksand = Quicksand({ subsets: ['latin'] })

@@ -3,9 +3,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { Switch } from "@headlessui/react";
 import { Fragment } from "react";
 import { SunIcon, MoonIcon } from '@heroicons/react/20/solid'
-import { updatePrivacy, } from "@/api/user";
-import type { Profile } from "@/types/UserTypes";
-import type { Database } from "@/db_types"
+import type { Database, Profile } from "@/types"
 
 type PrivateSwitchProps = {
   profile: Profile
@@ -16,7 +14,7 @@ export default function PrivateSwitch({ profile }: PrivateSwitchProps) {
   const router = useRouter()
 
   const handleUpdate = () => {
-    updatePrivacy(profile?.id!, profile.isPrivate, supabaseClient)
+    // updatePrivacy(profile?.id!, profile.isPrivate, supabaseClient) // TODO revisit this
     setTimeout(() => router.reload(), 500)
   }
 
