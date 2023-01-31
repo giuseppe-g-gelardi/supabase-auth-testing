@@ -15,6 +15,13 @@ export async function updateTheme(id: string, supabaseClient: SupabaseClient, th
     .eq('id', id)
 }
 
+export async function uTheme(id: string, supabaseClient: SupabaseClient, theme: string): Promise<void> {
+  await supabaseClient
+    .from('profiles')
+    .update({ theme })
+    .eq('id', id)
+}
+
 export async function updatePrivacy(
   id: string,
   isPrivate: boolean,

@@ -3,7 +3,7 @@ import { useTheme } from "next-themes";
 import { Switch } from "@headlessui/react";
 import { SunIcon, MoonIcon } from '@heroicons/react/20/solid'
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { updateTheme } from "@/api/user";
+import { updateTheme, uTheme } from "@/api/user";
 import { Profile } from "@/types/UserTypes";
 import type { Database } from "@/db_types";
 
@@ -20,15 +20,22 @@ type ThemeSwitchProps = {
 export default function ThemeSwitch({ profile }: ThemeSwitchProps) {
   const { systemTheme, setTheme, theme } = useTheme()
   const currentTheme = theme === 'system' ? systemTheme : theme;
+  // const currentTheme = theme === 'system' ? systemTheme : theme;
   const supabaseClient = useSupabaseClient<Database>()
 
+
   // update this to pull theme from profile.prefersDark setting
+
+  // set theme from profile.theme 
+  // if profile.theme is null, set theme to systemTheme
+
+
 
   return (
     <Switch
       checked={currentTheme === 'dark' ? true : false}
       onChange={() => `${setTheme(currentTheme === 'dark' ? 'light' : 'dark')
-        }${updateTheme(profile?.id!, supabaseClient, theme!)}`}
+        }${uTheme(profile?.id!, supabaseClient, currentTheme === 'dark' ? 'light' : 'dark')}`}
       as={Fragment}>
       {({ checked }) => (
         <a
@@ -49,21 +56,7 @@ export default function ThemeSwitch({ profile }: ThemeSwitchProps) {
   )
 }
 
-// import { Profile } from "@/types/UserTypes";
-  // const [profile, setProfile] = useState<Profile | null>(null)
-  // useEffect(() => {
-  //   async function loadData() {
-  //     const { data } = await supabaseClient.from('profiles').select('*').eq('id', user?.id).single()
-  //     console.log('use effect data', data)
-  //     setProfile(data)
-  //   }
-  //   // Only run query once user is logged in.
-  //   if (user) loadData()
-  // }, [supabaseClient, user])
-  // async function updateUserTheme(id: string) {
-  //   await supabaseClient
-  //   .from('profiles')
-  //   .update({ prefersDark: theme !== 'dark' ? true : false })
-  //   .eq('id', id)
-  // }
-      // onChange={() => `${setTheme(currentTheme === 'dark' ? 'light' : 'dark')}${updateUserTheme(user?.id!)}`}
+
+
+
+      // }${updateTheme(profile?.id!, supabaseClient, theme!)}`}

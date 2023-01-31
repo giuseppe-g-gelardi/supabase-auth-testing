@@ -115,6 +115,7 @@ export interface Database {
           location: string | null
           name: string | null
           prefersDark: boolean
+          theme: | 'light' | 'dark'
         }
         Insert: {
           avatar?: string | null
@@ -126,6 +127,7 @@ export interface Database {
           location?: string | null
           name?: string | null
           prefersDark?: boolean
+          theme?: | 'light' | 'dark'
         }
         Update: {
           avatar?: string | null
@@ -137,6 +139,7 @@ export interface Database {
           location?: string | null
           name?: string | null
           prefersDark?: boolean
+          theme?: | 'light' | 'dark'
         }
       }
       replies: {
