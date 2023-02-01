@@ -1,6 +1,8 @@
 import { useUser } from '@supabase/auth-helpers-react'
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 
+import LoginButton from '@/components/LoginButton'
+
 import type { Database, Session, Test } from '@/types'
 import type { GetServerSidePropsContext } from 'next'
 
@@ -30,6 +32,9 @@ export default function Home({ test, session }: TestProps) {
       <div className='flex gap-4'>
         <div className='text-rose-400'>{!session?.user ? "No session Detected, please log in" : (JSON.stringify(session?.user?.aud))}</div>
         <div className='text-purple-800 font-bold'>{JSON.stringify(user?.email)}</div>
+      </div>
+      <div className='bg-gray-200'>
+        <LoginButton />
       </div>
     </div>
   )
